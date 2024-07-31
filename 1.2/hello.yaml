@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: netology-web
+  labels:
+    app: myapp
+spec:
+  containers:
+  - name: netology-web
+    image: nginx 
