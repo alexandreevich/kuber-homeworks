@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: busybox-mooltitool
+  labels:
+    app: volume
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: volume
+  template:
+    metadata:
+      labels:
+        app: volume
+    spec:
+      containers:
+      - name: busybox
+        image: busybox
+        command: ["sh", "-c", "while true; do echo 'Hello from busybox' >> /input/data.txt; sleep 5; done"]
+        volumeMounts:
+        - name: my-volume
+          mountPath: /input
+      - name: multipool
+        image: wbitt/network-multitool
+        volumeMounts:
+        - name: my-volume
+          mountPath: /output
+      volumes:
+        - name: my-volume
+          emptyDir: {}
